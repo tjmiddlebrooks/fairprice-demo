@@ -532,3 +532,32 @@
                             Optimize Plan
                           </button>
                           <button className="flex-1 px-5 py-3 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-colors">
+                            Cancel Subscription
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="mt-8 p-8 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl text-white text-center shadow-xl">
+              <h3 className="text-3xl font-bold mb-3">Ready to stop overpaying?</h3>
+              <p className="mb-6 text-white/95 text-lg">Connect your bank account securely to see your real subscription costs</p>
+              <button className="px-8 py-4 bg-white text-blue-600 rounded-xl font-bold text-lg hover:bg-slate-50 transition-colors shadow-lg">
+                Connect Bank Account
+              </button>
+              <p className="mt-4 text-sm text-white/80">🔒 Bank-level encryption via Plaid • Your data is never sold</p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<FairPriceApp />);
+  </script>
+</body>
+</html>
