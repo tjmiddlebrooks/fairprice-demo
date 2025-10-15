@@ -40,6 +40,29 @@
     const CreditCard = ({ className }) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>;
     const Info = ({ className }) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>;
 
+    const BrandLogo = ({ sub }) => {
+      const [logoFailed, setLogoFailed] = useState(false);
+      
+      if (logoFailed) {
+        return (
+          <div className="w-8 h-8 rounded-lg font-bold text-white flex items-center justify-center text-sm" style={{background: sub.color || '#64748b'}}>
+            {sub.name[0].toUpperCase()}
+          </div>
+        );
+      }
+      
+      return (
+        <>
+          <img 
+            src={sub.logo} 
+            alt={sub.name} 
+            className="w-8 h-8 rounded-lg object-cover"
+            onError={() => setLogoFailed(true)}
+          />
+        </>
+      );
+    };
+
     const DualAreaChart = ({ data, width = 300, height = 120 }) => {
       if (!data || data.length < 2) return null;
       const originalPrice = data[0].price;
@@ -121,11 +144,11 @@
       const [showUsageInfo, setShowUsageInfo] = useState(false);
 
       const subscriptions = [
-        { id: 1, name: 'Netflix', currentPrice: 22.99, originalPrice: 15.99, startDate: 'Jan 2023', increases: 3, category: 'Streaming', status: 'overpriced', usageScore: 85, priceHistory: [{ date: 'Jan 23', price: 15.99 }, { date: 'Jul 23', price: 17.99 }, { date: 'Mar 24', price: 19.99 }, { date: 'Sep 24', price: 22.99 }], monthlySavings: 0, alert: 'Price increased by $3 last month', increasePercent: 44, recommendedTier: 'Current plan optimal' },
-        { id: 2, name: 'Spotify Family', currentPrice: 16.99, originalPrice: 14.99, startDate: 'Mar 2022', increases: 2, category: 'Music', status: 'wasteful', usageScore: 40, priceHistory: [{ date: 'Mar 22', price: 14.99 }, { date: 'Jul 23', price: 15.99 }, { date: 'Aug 24', price: 16.99 }], monthlySavings: 6.00, alert: 'Only 2 of 6 accounts active', increasePercent: 13, recommendedTier: 'Downgrade to Individual ($10.99)' },
-        { id: 3, name: 'Adobe Creative Cloud', currentPrice: 54.99, originalPrice: 52.99, startDate: 'May 2023', increases: 1, category: 'Software', status: 'fair', usageScore: 95, priceHistory: [{ date: 'May 23', price: 52.99 }, { date: 'Jan 25', price: 54.99 }], monthlySavings: 0, alert: null, increasePercent: 4, recommendedTier: 'Current plan optimal' },
-        { id: 4, name: 'Planet Fitness', currentPrice: 24.99, originalPrice: 10.99, startDate: 'Jan 2021', increases: 4, category: 'Fitness', status: 'overpriced', usageScore: 30, priceHistory: [{ date: 'Jan 21', price: 10.99 }, { date: 'Jan 22', price: 14.99 }, { date: 'Jul 22', price: 17.99 }, { date: 'Jan 23', price: 22.99 }, { date: 'Jun 24', price: 24.99 }], monthlySavings: 14.00, alert: 'Used only 3 times this year', increasePercent: 127, recommendedTier: 'Basic plan ($10.99)' },
-        { id: 5, name: 'ChatGPT Plus', currentPrice: 20.00, originalPrice: 20.00, startDate: 'Feb 2023', increases: 0, category: 'AI', status: 'fair', usageScore: 90, priceHistory: [{ date: 'Feb 23', price: 20.00 }], monthlySavings: 0, alert: null, increasePercent: 0, recommendedTier: 'Current plan optimal' }
+        { id: 1, name: 'Netflix', displayName: 'Netflix', logo: 'https://cdn.simpleicons.org/netflix/E50914', color: '#E50914', currentPrice: 22.99, originalPrice: 15.99, startDate: 'Jan 2023', increases: 3, category: 'Streaming', status: 'overpriced', usageScore: 85, priceHistory: [{ date: 'Jan 23', price: 15.99 }, { date: 'Jul 23', price: 17.99 }, { date: 'Mar 24', price: 19.99 }, { date: 'Sep 24', price: 22.99 }], monthlySavings: 0, alert: 'Price increased by $3 last month', increasePercent: 44, recommendedTier: 'Current plan optimal' },
+        { id: 2, name: 'Spotify', displayName: 'Spotify Family', logo: 'https://cdn.simpleicons.org/spotify/1DB954', color: '#1DB954', currentPrice: 16.99, originalPrice: 14.99, startDate: 'Mar 2022', increases: 2, category: 'Music', status: 'wasteful', usageScore: 40, priceHistory: [{ date: 'Mar 22', price: 14.99 }, { date: 'Jul 23', price: 15.99 }, { date: 'Aug 24', price: 16.99 }], monthlySavings: 6.00, alert: 'Only 2 of 6 accounts active', increasePercent: 13, recommendedTier: 'Downgrade to Individual ($10.99)' },
+        { id: 3, name: 'Adobe', displayName: 'Adobe Creative Cloud', logo: 'https://cdn.simpleicons.org/adobe/FF0000', color: '#FF0000', currentPrice: 54.99, originalPrice: 52.99, startDate: 'May 2023', increases: 1, category: 'Software', status: 'fair', usageScore: 95, priceHistory: [{ date: 'May 23', price: 52.99 }, { date: 'Jan 25', price: 54.99 }], monthlySavings: 0, alert: null, increasePercent: 4, recommendedTier: 'Current plan optimal' },
+        { id: 4, name: 'Planet Fitness', displayName: 'Planet Fitness', logo: 'https://cdn.simpleicons.org/planetfitness/000000', color: '#000000', currentPrice: 24.99, originalPrice: 10.99, startDate: 'Jan 2021', increases: 4, category: 'Fitness', status: 'overpriced', usageScore: 30, priceHistory: [{ date: 'Jan 21', price: 10.99 }, { date: 'Jan 22', price: 14.99 }, { date: 'Jul 22', price: 17.99 }, { date: 'Jan 23', price: 22.99 }, { date: 'Jun 24', price: 24.99 }], monthlySavings: 14.00, alert: 'Used only 3 times this year', increasePercent: 127, recommendedTier: 'Basic plan ($10.99)' },
+        { id: 5, name: 'ChatGPT', displayName: 'ChatGPT Plus', logo: 'https://cdn.simpleicons.org/openai/412991', color: '#412991', currentPrice: 20.00, originalPrice: 20.00, startDate: 'Feb 2023', increases: 0, category: 'AI', status: 'fair', usageScore: 90, priceHistory: [{ date: 'Feb 23', price: 20.00 }], monthlySavings: 0, alert: null, increasePercent: 0, recommendedTier: 'Current plan optimal' }
       ];
 
       const totalSpent = subscriptions.reduce((sum, sub) => sum + sub.currentPrice, 0);
@@ -181,7 +204,10 @@
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center flex-shrink-0"><AlertCircle className="w-7 h-7" /></div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-xl mb-2">Losing ${biggestWaste.monthlySavings.toFixed(2)}/mo on {biggestWaste.name}</h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <BrandLogo sub={biggestWaste} />
+                      <h3 className="font-bold text-xl">Losing ${biggestWaste.monthlySavings.toFixed(2)}/mo on {biggestWaste.displayName}</h3>
+                    </div>
                     <p className="text-base font-medium">{biggestWaste.alert}</p>
                     <p className="text-sm mt-2 opacity-90">That's ${(biggestWaste.monthlySavings * 12).toFixed(0)}/year you could save</p>
                   </div>
@@ -310,7 +336,10 @@
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6 gap-4">
                       <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-3 mb-3">
-                          <h3 className="text-2xl sm:text-2xl font-bold" style={{color: '#0f2336'}}>{sub.name}</h3>
+                          <div className="flex items-center gap-2">
+                            <BrandLogo sub={sub} />
+                            <h3 className="text-2xl sm:text-2xl font-bold" style={{color: '#0f2336'}}>{sub.displayName}</h3>
+                          </div>
                           <span className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 flex items-center gap-1.5 ${getStatusColor(sub.status)}`} style={sub.status === 'fair' ? {color: '#0A7A7E'} : {}}>
                             {getStatusIcon(sub.status)}
                             <span className="hidden sm:inline">{sub.status === 'overpriced' && 'Price Creep'}{sub.status === 'wasteful' && 'Wasteful'}{sub.status === 'fair' && 'Fair Price'}</span>
@@ -445,7 +474,7 @@
             </div>
           </Modal>
 
-          <Modal isOpen={modalOpen === 'optimize'} onClose={() => setModalOpen(null)} title={`Optimize ${selectedSubForModal?.name || 'Subscription'}`}>
+          <Modal isOpen={modalOpen === 'optimize'} onClose={() => setModalOpen(null)} title={`Optimize ${selectedSubForModal?.displayName || 'Subscription'}`}>
             <div className="space-y-6">
               <div className="flex items-start gap-4 p-4 gradient-bg-swoosh border-2 rounded-xl" style={{borderColor: '#00B9A7'}}>
                 <Zap className="w-6 h-6 flex-shrink-0 mt-1" style={{color: '#00B9A7'}} />
@@ -481,10 +510,10 @@
                   <div>
                     <h4 className="font-bold mb-3" style={{color: '#0f2336'}}>How optimization works:</h4>
                     <div className="space-y-3">
-                      <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>1</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Analyze your usage</p><p className="text-sm font-medium" style={{color: '#64748b'}}>We connect to {selectedSubForModal.name} to see exactly how you use it</p></div></div>
+                      <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>1</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Analyze your usage</p><p className="text-sm font-medium" style={{color: '#64748b'}}>We connect to {selectedSubForModal.displayName} to see exactly how you use it</p></div></div>
                       <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>2</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Compare all available plans</p><p className="text-sm font-medium" style={{color: '#64748b'}}>Check every pricing tier and feature set</p></div></div>
                       <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>3</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Show you the best match</p><p className="text-sm font-medium" style={{color: '#64748b'}}>Personalized recommendation with clear savings and trade-offs</p></div></div>
-                      <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>4</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Handle the switch (optional)</p><p className="text-sm font-medium" style={{color: '#64748b'}}>We'll contact {selectedSubForModal.name} and change your plan, or provide step-by-step instructions</p></div></div>
+                      <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>4</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Handle the switch (optional)</p><p className="text-sm font-medium" style={{color: '#64748b'}}>We'll contact {selectedSubForModal.displayName} and change your plan, or provide step-by-step instructions</p></div></div>
                     </div>
                   </div>
                   
@@ -499,7 +528,7 @@
             </div>
           </Modal>
 
-          <Modal isOpen={modalOpen === 'cancel'} onClose={() => setModalOpen(null)} title={`Cancel ${selectedSubForModal?.name || 'Subscription'}`}>
+          <Modal isOpen={modalOpen === 'cancel'} onClose={() => setModalOpen(null)} title={`Cancel ${selectedSubForModal?.displayName || 'Subscription'}`}>
             <div className="space-y-6">
               <div className="flex items-start gap-4 p-4 bg-orange-50 border-2 border-orange-300 rounded-xl">
                 <AlertCircle className="w-6 h-6 text-orange-700 flex-shrink-0 mt-1" />
@@ -517,7 +546,7 @@
                   <div>
                     <h4 className="font-bold mb-3" style={{color: '#0f2336'}}>How cancellation works:</h4>
                     <div className="space-y-3">
-                      <div className="flex gap-3"><div className="w-8 h-8 gradient-bg text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>We contact {selectedSubForModal.name}</p><p className="text-sm font-medium" style={{color: '#64748b'}}>Our concierge team handles all communication</p></div></div>
+                      <div className="flex gap-3"><div className="w-8 h-8 gradient-bg text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>We contact {selectedSubForModal.displayName}</p><p className="text-sm font-medium" style={{color: '#64748b'}}>Our concierge team handles all communication</p></div></div>
                       <div className="flex gap-3"><div className="w-8 h-8 gradient-bg text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Navigate retention offers</p><p className="text-sm font-medium" style={{color: '#64748b'}}>We deal with hidden menus and pushy retention tactics</p></div></div>
                       <div className="flex gap-3"><div className="w-8 h-8 gradient-bg text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Confirm cancellation</p><p className="text-sm font-medium" style={{color: '#64748b'}}>You receive full confirmation once complete</p></div></div>
                       <div className="flex gap-3"><div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{background: '#00B9A7'}}>4</div><div><p className="font-bold text-sm" style={{color: '#0f2336'}}>Monitor for issues</p><p className="text-sm font-medium" style={{color: '#64748b'}}>We watch for any erroneous charges after cancellation</p></div></div>
